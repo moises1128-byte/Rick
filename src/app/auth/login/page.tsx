@@ -16,9 +16,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
   const { toast } = useToast();
+  const router = useRouter();
 
   const emailRegExp =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -42,9 +44,10 @@ const Login = () => {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     toast({
-      description: "Your message has been sent.",
+      description: "Access Granted ✅",
     });
     console.log(values);
+    router.replace("/user");
   }
 
   return (
@@ -81,7 +84,11 @@ const Login = () => {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input type="password" placeholder="*********" {...field} />
+                      <Input
+                        type="password"
+                        placeholder="*********"
+                        {...field}
+                      />
                     </FormControl>
 
                     <FormMessage />
