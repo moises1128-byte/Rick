@@ -55,7 +55,10 @@ const Login = () => {
         </h3>
         <div className="mt-10 flex flex-col gap-y-10 w-full items-center">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="space-y-8 w-full"
+            >
               <FormField
                 control={form.control}
                 name="email"
@@ -63,7 +66,7 @@ const Login = () => {
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input placeholder="shadcn" {...field} />
+                      <Input placeholder="Enter your email" {...field} />
                     </FormControl>
 
                     <FormMessage />
@@ -78,7 +81,7 @@ const Login = () => {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input type="password" placeholder="shadcn" {...field} />
+                      <Input type="password" placeholder="*********" {...field} />
                     </FormControl>
 
                     <FormMessage />

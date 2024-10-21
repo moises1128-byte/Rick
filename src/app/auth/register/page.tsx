@@ -24,6 +24,9 @@ const Register = () => {
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   const formSchema = z.object({
+    name: z
+      .string({ required_error: "Name is required" })
+      .min(1, "Name is required"),
     email: z
       .string({ required_error: "Email is required" })
       .regex(new RegExp(emailRegExp), { message: "The email is not valid" }),
@@ -35,6 +38,7 @@ const Register = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
     },
@@ -61,12 +65,26 @@ const Register = () => {
             >
               <FormField
                 control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Name" {...field} />
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
                 name="email"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input placeholder="shadcn" {...field} />
+                      <Input placeholder="Email" {...field} />
                     </FormControl>
 
                     <FormMessage />
@@ -81,7 +99,11 @@ const Register = () => {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input type="password" placeholder="shadcn" {...field} />
+                      <Input
+                        type="password"
+                        placeholder="*********"
+                        {...field}
+                      />
                     </FormControl>
 
                     <FormMessage />
