@@ -1,25 +1,11 @@
 "use client";
-import { useEffect, useState } from "react";
+
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
+import CharactersStore from "@/store/character-store";
 
 const ConsultationCharacter = () => {
-  const [characters, setCharacters] = useState([]);
-
-  const fetchCharacters = async () => {
-    try {
-      const response = await fetch("https://rickandmortyapi.com/api/character");
-      const characters = await response.json();
-      setCharacters(characters);
-    } catch (error) {
-      alert("Error");
-      console.error("Error: ", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchCharacters();
-  }, []);
+  const { array } = CharactersStore();
 
   return (
     <main className=" flex w-full bg-white	h-full justify-center items-center">
@@ -28,9 +14,9 @@ const ConsultationCharacter = () => {
           Cunsultation Character
         </h3>
 
-        {characters.length !== 0 && (
+        {array.length !== 0 && (
           <div className="container mx-auto py-10">
-            <DataTable columns={columns} data={characters.results} />
+            <DataTable columns={columns} data={array} />
           </div>
         )}
       </div>

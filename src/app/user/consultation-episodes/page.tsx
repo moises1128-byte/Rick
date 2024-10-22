@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import {
   Table,
@@ -10,32 +10,20 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { Collapsible, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Collapsible } from "@/components/ui/collapsible";
 import Image from "next/image";
 import EditButton from "./components/EditButton";
 import DeleteButton from "./components/DeleteButton";
+import EpisodesStore from "@/store/episodes-store";
+import Link from "next/link";
+import { Link2 } from "lucide-react";
 
 const ConsultationEpisodes = () => {
-  const [episodes, setEpisodes] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [pageSize, setPageSize] = useState(8);
   const [searchQuery, setSearchQuery] = useState("");
-
-  const fetchEpisodes = async () => {
-    try {
-      fetch("https://rickandmortyapi.com/api/episode")
-        .then((response) => response.json())
-        .then((episodes) => setEpisodes(episodes.results));
-    } catch (error) {
-      alert("Error");
-      console.error("Error: ", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchEpisodes();
-  }, []);
+  const { array, deleteEpisode, editEpisode } = EpisodesStore();
 
   const handlePreviousPage = () => {
     if (currentPage > 1) {
@@ -44,7 +32,7 @@ const ConsultationEpisodes = () => {
   };
 
   const handleNextPage = () => {
-    if (currentPage < Math.ceil(episodes.length / pageSize)) {
+    if (currentPage < Math.ceil(array.length / pageSize)) {
       setCurrentPage(currentPage + 1);
     }
   };
@@ -55,8 +43,9 @@ const ConsultationEpisodes = () => {
     setSearchQuery(event.target.value);
   };
 
-  const filteredEpisodes = episodes.filter((episode: { name: string }) =>
-    episode.name.toLowerCase().includes(searchQuery.toLowerCase())
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const filteredEpisodes = array.filter((array: any) =>
+    array.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const startIndex = (currentPage - 1) * pageSize;
@@ -67,7 +56,7 @@ const ConsultationEpisodes = () => {
     <main className=" flex w-full bg-white	h-full justify-center items-center">
       <div className="w-3/4	flex flex-col items-start p-6 gap-6 bg-white rounded-2xl border border-gray-800 border-opacity-20 shadow-sm	">
         <h3 className="mt-6 text-gray-700 text-3xl font-bold leading-10 font-[family-name:var(--font-geist-mono)]">
-          Cunsultation Character
+          Cunsultation Episode
         </h3>
 
         <div className="container mx-auto">
@@ -81,50 +70,57 @@ const ConsultationEpisodes = () => {
             <Table>
               <TableHeader>
                 <TableRow>
+                  <TableHead className="font-medium">Id</TableHead>
                   <TableHead className="font-medium">Name</TableHead>
                   <TableHead className="font-medium">Created</TableHead>
-                  <TableHead className="font-medium">Views</TableHead>
-                  <TableHead className="font-medium">Image</TableHead>
+                  <TableHead className="font-medium">Air Date</TableHead>
+                  <TableHead className="font-medium">Url</TableHead>
                   <TableHead className="font-medium">Action</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {episodes ? (
+                {array ? (
                   displayedEpisodes.map((episode: any, index) => (
                     <Collapsible key={index} asChild>
                       <TableRow>
+                        <TableCell>{episode.id}</TableCell>
                         <TableCell>{episode.name}</TableCell>
                         <TableCell>{episode.created}</TableCell>
+                        <TableCell>{episode.air_date}</TableCell>
+
                         <TableCell>
-                          {episode.episode}
-                          <CollapsibleTrigger asChild>
-                            <div>{episode.air_date}</div>
-                          </CollapsibleTrigger>
-                        </TableCell>
-                        <TableCell>
-                          <Image
+                          <Link href={episode.url} target="_blank">
+                            <div className="hover:opacity-50">
+                              <Link2 />
+                            </div>
+                          </Link>
+
+                          {/* <Image
                             alt="test"
                             width={40}
                             height={40}
                             src={
                               "https://rickandmortyapi.com/api/character/avatar/1.jpeg"
                             }
-                          />
+                          /> */}
                         </TableCell>
                         <TableCell>
                           <div className="flex flex-row gap-2.5 ">
                             <EditButton
-                              title={"Edit titlekjasd"}
-                              description={"descrpition asjhd"}
+                              title={"Episode"}
                               back={"back"}
-                              next={"nextkAJS"}
+                              episodeData={episode}
+                              editEpisode={editEpisode}
                             />
 
                             <DeleteButton
                               title={"Delete titlekjasd"}
                               description={"descrpition asjhd"}
                               back={"back"}
-                              next={"nextkAJS"}
+                              next={"Delete Episode"}
+                              episodeName={episode.name}
+                              id={episode.id}
+                              deleteEpisode={deleteEpisode}
                             />
                           </div>
                         </TableCell>
@@ -142,7 +138,7 @@ const ConsultationEpisodes = () => {
               <button
                 className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-8 rounded-md px-3 text-xs"
                 onClick={handleNextPage}
-                disabled={currentPage >= Math.ceil(episodes.length / pageSize)}
+                disabled={currentPage >= Math.ceil(array.length / pageSize)}
               >
                 Next
               </button>

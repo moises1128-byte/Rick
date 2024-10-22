@@ -9,6 +9,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { useToast } from "@/hooks/use-toast";
 
 import { Trash2 } from "lucide-react";
 
@@ -17,16 +18,33 @@ type DeleteProps = {
   description: string;
   back: string;
   next: string;
+  id: number;
+  deleteEpisode: (id: number) => void;
+  episodeName: string;
 };
 
-const DeleteButton = ({ title, description, back, next }: DeleteProps) => {
+const DeleteButton = ({
+  title,
+  description,
+  back,
+  next,
+  id,
+  episodeName,
+  deleteEpisode,
+}: DeleteProps) => {
+  const { toast } = useToast();
+  const handleDelete = (id: number) => {
+    deleteEpisode(id);
+    toast({
+      description: `The Episode "${episodeName}" has been deleted succesfully ✅`,
+    });
+  };
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <div className="hover:opacity-50 cursor-pointer">
-          <Trash2
-            style={{ color: "red" }}
-          />
+          <Trash2 style={{ color: "red" }} />
         </div>
       </AlertDialogTrigger>
       <AlertDialogContent>
@@ -36,7 +54,9 @@ const DeleteButton = ({ title, description, back, next }: DeleteProps) => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>{back}</AlertDialogCancel>
-          <AlertDialogAction>{next}</AlertDialogAction>
+          <AlertDialogAction onClick={() => handleDelete(id)}>
+            {next}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
