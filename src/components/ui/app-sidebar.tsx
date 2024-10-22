@@ -21,7 +21,7 @@ import {
 const items = [
   {
     title: "Home",
-    url: "#",
+    url: "/user/dashboard",
     icon: Home,
   },
   {
@@ -31,12 +31,12 @@ const items = [
   },
   {
     title: "Creacion de Personaje",
-    url: "#",
+    url: "/user/character-creation",
     icon: UserRoundPlus,
   },
   {
     title: "Consulta de Episodio",
-    url: "#",
+    url: "/user/consultation-episodes",
     icon: FileSearch2,
   },
   {

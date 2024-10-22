@@ -8,9 +8,9 @@ const ConsultationCharacter = () => {
 
   const fetchCharacters = async () => {
     try {
-      fetch("https://rickandmortyapi.com/api/character")
-        .then((response) => response.json())
-        .then((characters) => setCharacters(characters.results));
+      const response = await fetch("https://rickandmortyapi.com/api/character");
+      const characters = await response.json();
+      setCharacters(characters);
     } catch (error) {
       alert("Error");
       console.error("Error: ", error);
@@ -28,9 +28,11 @@ const ConsultationCharacter = () => {
           Cunsultation Character
         </h3>
 
-        <div className="container mx-auto py-10">
-          <DataTable columns={columns} data={characters.results} />
-        </div>
+        {characters.length !== 0 && (
+          <div className="container mx-auto py-10">
+            <DataTable columns={columns} data={characters.results} />
+          </div>
+        )}
       </div>
     </main>
   );

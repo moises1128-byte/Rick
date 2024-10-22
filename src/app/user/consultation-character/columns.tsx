@@ -41,7 +41,7 @@ export const columns: ColumnDef<Characters>[] = [
     header: "Status",
   },
   {
-    accessorKey: "characterImage",
-    header: "CharacterImage",
+    accessorKey: "image",
+    header: "Image",
   },
 ];
