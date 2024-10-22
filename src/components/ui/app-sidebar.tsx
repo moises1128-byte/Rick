@@ -26,7 +26,7 @@ const items = [
   },
   {
     title: "Consulta de Personaje",
-    url: "#",
+    url: "/user/consultation-character",
     icon: UserRoundSearch,
   },
   {
