@@ -16,13 +16,13 @@ export default function Home() {
           <div className="mt-10 flex flex-col gap-y-10 w-full items-center">
             <AuthCard
               title={"Login"}
-              description={`Réserver un rendez-vous près de chez vous`}
+              description={`Login to learn about the chapters and characters of the series !`}
               type={"white"}
               path={`/auth/login`}
             />
             <AuthCard
               title={"Register"}
-              description={`Développer et gérer votre entreprise`}
+              description={`Register to learn about the chapters and characters of the series`}
               type={"dark"}
               path={`/auth/register`}
             />
