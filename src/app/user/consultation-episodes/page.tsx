@@ -16,6 +16,7 @@ import DeleteButton from "./components/DeleteButton";
 import EpisodesStore from "@/store/episodes-store";
 import Link from "next/link";
 import { Link2 } from "lucide-react";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 const ConsultationEpisodes = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -83,7 +84,16 @@ const ConsultationEpisodes = () => {
                     <Collapsible key={index} asChild>
                       <TableRow>
                         <TableCell>{episode.id}</TableCell>
-                        <TableCell>{episode.name}</TableCell>
+                        <TableCell>
+                          <div className="flex gap-5 items-center	">
+                            <Avatar>
+                              <AvatarFallback>
+                                {episode.name.charAt(0).toUpperCase()}
+                              </AvatarFallback>
+                            </Avatar>
+                            <span>{episode.name}</span>
+                          </div>
+                        </TableCell>
                         <TableCell>{episode.created}</TableCell>
                         <TableCell>{episode.air_date}</TableCell>
 

@@ -164,15 +164,16 @@ const EditButton = ({ title, back, episodeData, editEpisode }: EditProps) => {
                       </FormItem>
                     )}
                   />
-                  <Button type="submit">Submit</Button>
+                  <Button type="submit">Update</Button>
                 </form>
               </Form>
             </div>
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>{back}</AlertDialogCancel>
-          {/* <AlertDialogAction>{next}</AlertDialogAction> */}
+          <AlertDialogCancel onClick={() => setIsOpen(false)}>
+            {back}
+          </AlertDialogCancel>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

@@ -17,6 +17,8 @@ import EditButton from "./components/EditButton";
 import DeleteButton from "./components/DeleteButton";
 import EpisodesStore from "@/store/episodes-store";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
 const ConsultationCharacter = () => {
   const [currentPage, setCurrentPage] = useState(1);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -83,17 +85,23 @@ const ConsultationCharacter = () => {
                     <Collapsible key={index} asChild>
                       <TableRow>
                         <TableCell>{character.id}</TableCell>
-                        <TableCell>{character.name}</TableCell>
+                        <TableCell>
+                          <div className="flex gap-5 items-center	">
+                            <Avatar>
+                              <AvatarFallback>
+                                {character.name.charAt(0).toUpperCase()}
+                              </AvatarFallback>
+                            </Avatar>
+                            <span>{character.name}</span>
+                          </div>
+                        </TableCell>
                         <TableCell>{character.status}</TableCell>
                         <TableCell>{character.species}</TableCell>
 
                         <TableCell>
-                          <Image
-                            alt="test"
-                            width={40}
-                            height={40}
-                            src={character.image}
-                          />
+                          <Avatar>
+                            <AvatarImage src={character.image} />
+                          </Avatar>
                         </TableCell>
                         <TableCell>
                           <div className="flex flex-row gap-2.5 ">
