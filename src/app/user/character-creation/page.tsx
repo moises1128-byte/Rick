@@ -86,7 +86,7 @@ const CharacterCreation = () => {
             <AvatarImage src={"https://iili.io/2KwPjb1.png"} />
           </Avatar>
 
-          <h3 className="mt-6 text-gray-700 text-3xl font-bold leading-10 font-[family-name:var(--font-geist-mono)]">
+          <h3 className="mt-6 text-[#00B5CC] text-3xl font-bold leading-10 font-[family-name:var(--font-geist-mono)]">
             Character Creation
           </h3>
         </div>
@@ -190,7 +190,12 @@ const CharacterCreation = () => {
                 <FormMessage />
               </FormItem>
 
-              <Button type="submit">Submit</Button>
+              <Button
+                className="bg-[#00B5CC] hover:bg-[#00B5CC] hover:opacity-50"
+                type="submit"
+              >
+                Submit
+              </Button>
             </form>
           </Form>
         </div>

@@ -44,7 +44,7 @@ const DeleteButton = ({
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <div className="hover:opacity-50 cursor-pointer">
-          <Trash2 style={{ color: "red" }} />
+          <Trash2 style={{ color: "#00B5CC" }} />
         </div>
       </AlertDialogTrigger>
       <AlertDialogContent>
@@ -54,7 +54,10 @@ const DeleteButton = ({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>{back}</AlertDialogCancel>
-          <AlertDialogAction onClick={() => handleDelete(id)}>
+          <AlertDialogAction
+            className="bg-[#00B5CC] hover:bg-[#00B5CC] hover:opacity-50"
+            onClick={() => handleDelete(id)}
+          >
             {next}
           </AlertDialogAction>
         </AlertDialogFooter>

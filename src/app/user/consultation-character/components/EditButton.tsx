@@ -139,7 +139,7 @@ const EditButton = ({
           onClick={() => setIsOpen(true)}
           className="hover:opacity-50 cursor-pointer"
         >
-          <Pencil style={{ color: "#04ff00" }} />
+          <Pencil style={{ color: "#b5e031" }} />
         </div>
       </AlertDialogTrigger>
       <AlertDialogContent className="max-h-[80%] overflow-auto">
@@ -249,7 +249,12 @@ const EditButton = ({
                     <FormMessage />
                   </FormItem>
 
-                  <Button type="submit">Update</Button>
+                  <Button
+                    className="bg-[#00B5CC] hover:bg-[#00B5CC] hover:opacity-50"
+                    type="submit"
+                  >
+                    Submit
+                  </Button>
                 </form>
               </Form>
             </div>

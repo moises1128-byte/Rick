@@ -15,20 +15,20 @@ const AuthCard = ({ title, description, type, path }: AuthProps) => {
     return {
       container:
         type === "dark"
-          ? "flex flex-row bg-gray-700 gap-2 rounded-md border border-gray-800 items-center w-full text-decoration-none justify-between p-4 transition-all duration-500 ease-in-out hover:opacity-50 hover:scale-105 sm:w-4/5"
-          : "flex flex-row bg-white gap-2 rounded-md border border-gray-800 items-center w-full text-decoration-none justify-between p-4 transition-all duration-500 ease-in-out hover:opacity-50 hover:scale-105 sm:w-4/5",
+          ? "flex flex-row bg-[#00B5CC] gap-2 rounded-md border border-[#B5E031] items-center w-full text-decoration-none justify-between p-4 transition-all duration-500 ease-in-out hover:opacity-50 hover:scale-105 sm:w-4/5"
+          : "flex flex-row bg-white gap-2 rounded-md border border-[#B5E031] items-center w-full text-decoration-none justify-between p-4 transition-all duration-500 ease-in-out hover:opacity-50 hover:scale-105 sm:w-4/5",
       title:
         type === "dark"
           ? "text-start text-white text-2xl font-bold font-[family-name:var(--font-geist-mono)]"
-          : "text-start text-gray-700 text-2xl font-bold font-[family-name:var(--font-geist-mono)]",
+          : "text-start text-[#00B5CC] text-2xl font-bold font-[family-name:var(--font-geist-mono)]",
       description:
         type === "dark"
           ? "text-gray-200 text-lg leading-8 opacity-80 font-[family-name:var(--font-geist-mono)]"
-          : "text-gray-700 text-lg leading-8 font-[family-name:var(--font-geist-mono)]",
+          : "text-[#00B5CC] text-lg leading-8 font-[family-name:var(--font-geist-mono)]",
       arrowContainer:
         type === "dark"
-          ? "flex flex-col justify-center rounded-md border border-gray-200 opacity-20 p-2"
-          : "flex flex-col justify-center rounded-md border border-gray-800 p-2",
+          ? "flex flex-col justify-center rounded-md border border-[#B5E031] opacity-20 p-2"
+          : "flex flex-col justify-center rounded-md border border-[#B5E031] p-2",
     };
   };
 

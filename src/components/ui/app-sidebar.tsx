@@ -60,7 +60,7 @@ export function AppSidebar() {
                     <a href={item.url}>
                       <item.icon />
                       {item.title === "Logout" ? (
-                        <span className="hover:text-[red]">{item.title}</span>
+                        <span className="hover:text-[#00B5CC]">{item.title}</span>
                       ) : (
                         <span>{item.title}</span>
                       )}

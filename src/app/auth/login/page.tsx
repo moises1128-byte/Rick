@@ -53,7 +53,7 @@ const Login = () => {
   return (
     <main className="bg-white flex w-screen	h-screen justify-center items-center">
       <div className="w-1/4	flex flex-col items-start p-6 gap-6 bg-white rounded-2xl border border-gray-800 border-opacity-20 shadow-sm	">
-        <h3 className="mt-6 text-gray-700 text-3xl font-bold leading-10 font-[family-name:var(--font-geist-mono)]">
+        <h3 className="mt-6 text-[#00B5CC] text-3xl font-bold leading-10 font-[family-name:var(--font-geist-mono)]">
           Login
         </h3>
         <div className="mt-10 flex flex-col gap-y-10 w-full items-center">
@@ -103,7 +103,12 @@ const Login = () => {
                 <span>Register</span>
               </Link>
 
-              <Button type="submit">Submit</Button>
+              <Button
+                className="bg-[#00B5CC] hover:bg-[#00B5CC] hover:opacity-50"
+                type="submit"
+              >
+                Submit
+              </Button>
             </form>
           </Form>
         </div>
