@@ -42,11 +42,10 @@ const Login = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit() {
     toast({
       description: "Access Granted ✅",
     });
-    console.log(values);
     router.replace("/user");
   }
 

@@ -76,7 +76,7 @@ const EpisodesStore = create<StoreState>()(
           }),
         })),
     }),
-    { name: "my-app-storage" }
+    { name: "rick-proyect-storage" }
   )
 );
 
