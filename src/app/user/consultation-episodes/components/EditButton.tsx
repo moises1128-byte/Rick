@@ -28,7 +28,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 type DataProps = {
   id: number;
@@ -60,7 +60,6 @@ type EditProps = {
 const EditButton = ({ title, back, episodeData, editEpisode }: EditProps) => {
   const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
-  const dialogRef = useRef<HTMLDialogElement>(null);
 
   const formSchema = z.object({
     name: z.string().min(1, "Name is required"),
@@ -80,7 +79,15 @@ const EditButton = ({ title, back, episodeData, editEpisode }: EditProps) => {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    editEpisode(episodeData.id, values);
+    const data = {
+      ...values,
+      id: episodeData.id,
+      episode: "",
+      characters: [""],
+      url: "",
+      created: "",
+    };
+    editEpisode(episodeData.id, data);
     toast({
       description: `The episode ${episodeData.name} has been updated ✅`,
     });
@@ -88,7 +95,7 @@ const EditButton = ({ title, back, episodeData, editEpisode }: EditProps) => {
   }
 
   return (
-    <AlertDialog open={isOpen} onClose={() => setIsOpen(false)} ref={dialogRef}>
+    <AlertDialog open={isOpen}>
       <AlertDialogTrigger asChild>
         <div
           onClick={() => setIsOpen(true)}

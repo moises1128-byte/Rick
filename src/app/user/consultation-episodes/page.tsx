@@ -16,7 +16,7 @@ import DeleteButton from "./components/DeleteButton";
 import EpisodesStore from "@/store/episodes-store";
 import Link from "next/link";
 import { Link2 } from "lucide-react";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const ConsultationEpisodes = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -55,9 +55,15 @@ const ConsultationEpisodes = () => {
   return (
     <main className=" flex w-full bg-white	h-full justify-center items-center">
       <div className="w-3/4	flex flex-col items-start p-6 gap-6 bg-white rounded-2xl border border-gray-800 border-opacity-20 shadow-sm	">
-        <h3 className="mt-6 text-gray-700 text-3xl font-bold leading-10 font-[family-name:var(--font-geist-mono)]">
-          Cunsultation Episode
-        </h3>
+        <div className="flex gap-5 items-center	">
+          <Avatar className="relative top-3">
+            <AvatarImage src={"https://iili.io/2KwUR1V.png"} />
+          </Avatar>
+
+          <h3 className="mt-6 text-gray-700 text-3xl font-bold leading-10 font-[family-name:var(--font-geist-mono)]">
+            Episodes List
+          </h3>
+        </div>
 
         <div className="container mx-auto">
           <input
@@ -80,7 +86,7 @@ const ConsultationEpisodes = () => {
               </TableHeader>
               <TableBody>
                 {array ? (
-                  displayedEpisodes.map((episode: any, index) => (
+                  displayedEpisodes.map((episode, index) => (
                     <Collapsible key={index} asChild>
                       <TableRow>
                         <TableCell>{episode.id}</TableCell>

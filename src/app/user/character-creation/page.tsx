@@ -25,10 +25,12 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import EpisodesStore from "@/store/episodes-store";
 import { useState } from "react";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 const CharacterCreation = () => {
   const { toast } = useToast();
   const { Array, addCharacter } = EpisodesStore();
+  const [Status, setStaus] = useState("");
 
   const formSchema = z.object({
     name: z.string().min(1, "Name is required"),
@@ -47,8 +49,6 @@ const CharacterCreation = () => {
     },
   });
 
-  const [Status, setStaus] = useState("");
-
   const handleStringToInt = (value: string) => {
     setStaus(value);
   };
@@ -58,7 +58,18 @@ const CharacterCreation = () => {
       description: "Character has been created succesfully ✅",
     });
 
-    const data = { ...values, id: Array.length + 1, status: Status };
+    const data = {
+      ...values,
+      id: Array.length + 1, //
+      status: Status, //
+      type: "", //
+      gender: "", //
+      origin: { name: "", url: "" },
+      location: { name: "", url: "" },
+      episode: [""],
+      url: "",
+      created: "",
+    };
 
     addCharacter(data);
   }
@@ -66,9 +77,15 @@ const CharacterCreation = () => {
   return (
     <main className=" flex w-full bg-white	h-full justify-center items-center">
       <div className="w-3/4	flex flex-col items-start p-6 gap-6 bg-white rounded-2xl border border-gray-800 border-opacity-20 shadow-sm	">
-        <h3 className="mt-6 text-gray-700 text-3xl font-bold leading-10 font-[family-name:var(--font-geist-mono)]">
-          Character Creation
-        </h3>
+        <div className="flex gap-5 items-center	">
+          <Avatar className="relative top-3">
+            <AvatarImage src={"https://iili.io/2KwPjb1.png"} />
+          </Avatar>
+
+          <h3 className="mt-6 text-gray-700 text-3xl font-bold leading-10 font-[family-name:var(--font-geist-mono)]">
+            Character Creation
+          </h3>
+        </div>
 
         <div className="mt-10 flex flex-col gap-y-10 w-full items-center">
           <Form {...form}>
@@ -90,29 +107,24 @@ const CharacterCreation = () => {
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name="status"
-                render={() => (
-                  <FormItem>
-                    <FormLabel>status</FormLabel>
-                    <FormControl>
-                      <Select onValueChange={handleStringToInt}>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Select Status" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="Alive">Alive</SelectItem>
-                          <SelectItem value="unknown">unknown</SelectItem>
-                          <SelectItem value="Dead">Dead</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
 
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <FormItem>
+                <FormLabel>status</FormLabel>
+                <FormControl>
+                  <Select name="status" onValueChange={handleStringToInt}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select Status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Alive">Alive</SelectItem>
+                      <SelectItem value="unknown">unknown</SelectItem>
+                      <SelectItem value="Dead">Dead</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
               <FormField
                 control={form.control}
                 name="species"

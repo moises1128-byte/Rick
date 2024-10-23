@@ -11,8 +11,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 import { Collapsible } from "@/components/ui/collapsible";
-import Image from "next/image";
 import EditButton from "./components/EditButton";
 import DeleteButton from "./components/DeleteButton";
 import EpisodesStore from "@/store/episodes-store";
@@ -22,9 +29,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 const ConsultationCharacter = () => {
   const [currentPage, setCurrentPage] = useState(1);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(5);
   const [searchQuery, setSearchQuery] = useState("");
   const { Array, editCharacter, deleteCharacter } = EpisodesStore();
+  const [Status, setStaus] = useState("");
 
   const handlePreviousPage = () => {
     if (currentPage > 1) {
@@ -44,9 +52,17 @@ const ConsultationCharacter = () => {
     setSearchQuery(event.target.value);
   };
 
+  const handleStringToInt = (value: string) => {
+    setStaus(value);
+  };
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const filteredCharacters = Array.filter((Array: any) =>
-    Array.name.toLowerCase().includes(searchQuery.toLowerCase())
+    Status === "Name"
+      ? Array.name.toLowerCase().includes(searchQuery.toLowerCase())
+      : Status === "Status"
+      ? Array.status.toLowerCase().includes(searchQuery.toLowerCase())
+      : Array.species.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const startIndex = (currentPage - 1) * pageSize;
@@ -56,35 +72,69 @@ const ConsultationCharacter = () => {
   return (
     <main className=" flex w-full bg-white	h-full justify-center items-center">
       <div className="w-3/4	flex flex-col items-start p-6 gap-6 bg-white rounded-2xl border border-gray-800 border-opacity-20 shadow-sm	">
-        <h3 className="mt-6 text-gray-700 text-3xl font-bold leading-10 font-[family-name:var(--font-geist-mono)]">
-          Cunsultation Character
-        </h3>
+        <div className="flex gap-5 items-center	">
+          <Avatar className="relative top-3">
+            <AvatarImage src={"https://iili.io/2Kw10YB.png"} />
+          </Avatar>
+
+          <h3 className="mt-6 text-gray-700 text-3xl font-bold leading-10 font-[family-name:var(--font-geist-mono)]">
+            Characters List
+          </h3>
+        </div>
 
         <div className="container mx-auto">
-          <input
-            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 max-w-sm"
-            placeholder="Search by name"
-            value={searchQuery}
-            onChange={handleSearch}
-          />
+          <div className="flex gap-4">
+            <input
+              className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 max-w-sm"
+              placeholder={
+                Status === "Name"
+                  ? "Search by name"
+                  : Status === "Status"
+                  ? "Search by status"
+                  : "Search by species"
+              }
+              value={searchQuery}
+              onChange={handleSearch}
+            />
+
+            <Select onValueChange={handleStringToInt}>
+              <SelectTrigger className="w-[15%]">
+                <SelectValue placeholder="Name" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Name">Name</SelectItem>
+                <SelectItem value="Status">Status</SelectItem>
+                <SelectItem value="Species">Species</SelectItem>
+                <SelectItem value="Type">Type</SelectItem>
+                <SelectItem value="Gender">Gender</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
           <div className="rounded-md border mt-5">
             <Table>
               <TableHeader>
                 <TableRow>
                   <TableHead className="font-medium">Id</TableHead>
-                  <TableHead className="font-medium">Name</TableHead>
-                  <TableHead className="font-medium">Status</TableHead>
-                  <TableHead className="font-medium">species</TableHead>
                   <TableHead className="font-medium">Image</TableHead>
+                  <TableHead className="font-medium">Name</TableHead>
+                  <TableHead className="font-medium">Type</TableHead>
+                  <TableHead className="font-medium">Status</TableHead>
+                  <TableHead className="font-medium">Species</TableHead>
+                  <TableHead className="font-medium">Gender</TableHead>
                   <TableHead className="font-medium">Action</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {Array.length !== 0 ? (
-                  displayedCharacters.map((character: any, index) => (
+                  displayedCharacters.map((character, index) => (
                     <Collapsible key={index} asChild>
                       <TableRow>
                         <TableCell>{character.id}</TableCell>
+                        <TableCell>
+                          <Avatar>
+                            <AvatarImage src={character.image} />
+                          </Avatar>
+                        </TableCell>
                         <TableCell>
                           <div className="flex gap-5 items-center	">
                             <Avatar>
@@ -95,14 +145,15 @@ const ConsultationCharacter = () => {
                             <span>{character.name}</span>
                           </div>
                         </TableCell>
+                        <TableCell>
+                          {character.type === "" ? "-" : character.type}
+                        </TableCell>
                         <TableCell>{character.status}</TableCell>
                         <TableCell>{character.species}</TableCell>
-
                         <TableCell>
-                          <Avatar>
-                            <AvatarImage src={character.image} />
-                          </Avatar>
+                          {character.gender === "" ? "-" : character.gender}
                         </TableCell>
+
                         <TableCell>
                           <div className="flex flex-row gap-2.5 ">
                             <EditButton
