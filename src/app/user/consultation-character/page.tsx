@@ -62,7 +62,11 @@ const ConsultationCharacter = () => {
       ? Array.name.toLowerCase().includes(searchQuery.toLowerCase())
       : Status === "Status"
       ? Array.status.toLowerCase().includes(searchQuery.toLowerCase())
-      : Array.species.toLowerCase().includes(searchQuery.toLowerCase())
+      : Status === "Species"
+      ? Array.species.toLowerCase().includes(searchQuery.toLowerCase())
+      : Status === "Type"
+      ? Array.type.toLowerCase().includes(searchQuery.toLowerCase())
+      : Array.gender.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const startIndex = (currentPage - 1) * pageSize;
@@ -91,7 +95,11 @@ const ConsultationCharacter = () => {
                   ? "Search by name"
                   : Status === "Status"
                   ? "Search by status"
-                  : "Search by species"
+                  : Status === "Species"
+                  ? "Search by species"
+                  : Status === "Type"
+                  ? "Search by type"
+                  : "Search by gender"
               }
               value={searchQuery}
               onChange={handleSearch}

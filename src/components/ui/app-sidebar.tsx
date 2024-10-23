@@ -21,7 +21,7 @@ import {
 const items = [
   {
     title: "Home",
-    url: "/user/dashboard",
+    url: "/user",
     icon: Home,
   },
   {
@@ -59,7 +59,11 @@ export function AppSidebar() {
                   <SidebarMenuButton asChild>
                     <a href={item.url}>
                       <item.icon />
-                      <span>{item.title}</span>
+                      {item.title === "Logout" ? (
+                        <span className="hover:text-[red]">{item.title}</span>
+                      ) : (
+                        <span>{item.title}</span>
+                      )}
                     </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>

@@ -84,14 +84,14 @@ const EditButton = ({
   const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
   const [Gender, setGender] = useState("");
+  const [Status, setStatus] = useState("");
 
   const formSchema = z.object({
     image: z.string().min(1, "url is required"),
     name: z.string().min(1, "Name is required"),
-    type: z.string().min(1, "type is required"),
-    status: z.string().min(1, "Status is required"),
+    type: z.string(),
+    status: z.string(),
     species: z.string().min(1, "Species is required"),
-    gender: z.string().min(1, "Gender is required"),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -102,7 +102,6 @@ const EditButton = ({
       type: characterData.type ?? "",
       status: characterData.status ?? "",
       species: characterData.species ?? "",
-      gender: characterData.gender ?? "",
     },
   });
 
@@ -111,6 +110,7 @@ const EditButton = ({
       ...values,
       id: characterData.id,
       gender: Gender,
+      status: Status,
       origin: { name: "", url: "" },
       location: { name: "", url: "" },
       episode: [""],
@@ -126,6 +126,10 @@ const EditButton = ({
 
   const handleGender = (value: string) => {
     setGender(value);
+  };
+
+  const handleStatus = (value: string) => {
+    setStatus(value);
   };
 
   return (
@@ -192,20 +196,24 @@ const EditButton = ({
                     )}
                   />
 
-                  <FormField
-                    control={form.control}
-                    name="status"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>status</FormLabel>
-                        <FormControl>
-                          <Input placeholder="status" {...field} />
-                        </FormControl>
+                  <FormItem>
+                    <FormLabel>status</FormLabel>
+                    <FormControl>
+                      <Select onValueChange={handleStatus}>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select Status" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Alive">Alive</SelectItem>
+                          <SelectItem value="Dead">Dead</SelectItem>
+                          <SelectItem value="unknown">unknown</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
 
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                    <FormMessage />
+                  </FormItem>
+
                   <FormField
                     control={form.control}
                     name="species"
@@ -221,31 +229,25 @@ const EditButton = ({
                     )}
                   />
 
-                  <FormField
-                    control={form.control}
-                    name="gender"
-                    render={() => (
-                      <FormItem>
-                        <FormLabel>gender</FormLabel>
-                        <FormControl>
-                          <Select onValueChange={handleGender}>
-                            <SelectTrigger className="w-full">
-                              <SelectValue
-                                placeholder={`${characterData.gender}`}
-                              />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="Male">Male</SelectItem>
-                              <SelectItem value="Female">Female</SelectItem>
-                              <SelectItem value="unknown">unknown</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </FormControl>
+                  <FormItem>
+                    <FormLabel>gender</FormLabel>
+                    <FormControl>
+                      <Select onValueChange={handleGender}>
+                        <SelectTrigger className="w-full">
+                          <SelectValue
+                            placeholder={`${characterData.gender}`}
+                          />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Male">Male</SelectItem>
+                          <SelectItem value="Female">Female</SelectItem>
+                          <SelectItem value="unknown">unknown</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
 
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                    <FormMessage />
+                  </FormItem>
 
                   <Button type="submit">Update</Button>
                 </form>

@@ -1,6 +1,6 @@
 function LoadingAuth() {
   return (
-    <div className="bg-white flex w-screen	h-screen justify-center items-center">
+    <div className="bg-white flex w-full	h-screen justify-center items-center">
       <svg
         aria-hidden="true"
         className="w-32 h-32 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"

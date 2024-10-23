@@ -30,27 +30,32 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 const CharacterCreation = () => {
   const { toast } = useToast();
   const { Array, addCharacter } = EpisodesStore();
-  const [Status, setStaus] = useState("");
+  const [Gender, setGender] = useState("");
+  const [Status, setStatus] = useState("");
 
   const formSchema = z.object({
-    name: z.string().min(1, "Name is required"),
-    // status: z.string().min(1, "created is required"),
-    species: z.string().min(1, "AirDate is required"),
     image: z.string().min(1, "url is required"),
+    name: z.string().min(1, "Name is required"),
+    type: z.string().min(1, "Type is required"),
+    species: z.string().min(1, "Species is required"),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      // status: "",
-      species: "",
       image: "",
+      name: "",
+      type: "",
+      species: "",
     },
   });
 
-  const handleStringToInt = (value: string) => {
-    setStaus(value);
+  const handleGender = (value: string) => {
+    setGender(value);
+  };
+
+  const handleStatus = (value: string) => {
+    setStatus(value);
   };
 
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -60,10 +65,9 @@ const CharacterCreation = () => {
 
     const data = {
       ...values,
-      id: Array.length + 1, //
-      status: Status, //
-      type: "", //
-      gender: "", //
+      id: Array.length + 1,
+      gender: Gender,
+      status: Status,
       origin: { name: "", url: "" },
       location: { name: "", url: "" },
       episode: [""],
@@ -95,6 +99,19 @@ const CharacterCreation = () => {
             >
               <FormField
                 control={form.control}
+                name="image"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>image</FormLabel>
+                    <FormControl>
+                      <Input placeholder="image" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
                 name="name"
                 render={({ field }) => (
                   <FormItem>
@@ -107,24 +124,39 @@ const CharacterCreation = () => {
                   </FormItem>
                 )}
               />
+              <FormField
+                control={form.control}
+                name="type"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>type</FormLabel>
+                    <FormControl>
+                      <Input placeholder="type" {...field} />
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
               <FormItem>
                 <FormLabel>status</FormLabel>
                 <FormControl>
-                  <Select name="status" onValueChange={handleStringToInt}>
+                  <Select onValueChange={handleStatus}>
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select Status" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="Alive">Alive</SelectItem>
-                      <SelectItem value="unknown">unknown</SelectItem>
                       <SelectItem value="Dead">Dead</SelectItem>
+                      <SelectItem value="unknown">unknown</SelectItem>
                     </SelectContent>
                   </Select>
                 </FormControl>
 
                 <FormMessage />
               </FormItem>
+
               <FormField
                 control={form.control}
                 name="species"
@@ -139,19 +171,24 @@ const CharacterCreation = () => {
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name="image"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>image</FormLabel>
-                    <FormControl>
-                      <Input placeholder="image" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+
+              <FormItem>
+                <FormLabel>gender</FormLabel>
+                <FormControl>
+                  <Select onValueChange={handleGender}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select Gender" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Male">Male</SelectItem>
+                      <SelectItem value="Female">Female</SelectItem>
+                      <SelectItem value="unknown">unknown</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
 
               <Button type="submit">Submit</Button>
             </form>
