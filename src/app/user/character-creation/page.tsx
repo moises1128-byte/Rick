@@ -33,8 +33,13 @@ const CharacterCreation = () => {
   const [Gender, setGender] = useState("");
   const [Status, setStatus] = useState("");
 
+  const imageRegExp =
+    /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})\/([\/\w \.-]+)\.(jpg|jpeg|png|gif|webp|svg)$/i;
+
   const formSchema = z.object({
-    image: z.string().min(1, "url is required"),
+    image: z
+      .string()
+      .regex(new RegExp(imageRegExp), { message: "The image is not valid" }),
     name: z.string().min(1, "Name is required"),
     type: z.string().min(1, "Type is required"),
     species: z.string().min(1, "Species is required"),
