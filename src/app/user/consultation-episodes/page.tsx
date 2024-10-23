@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/table";
 
 import { Collapsible } from "@/components/ui/collapsible";
-import Image from "next/image";
 import EditButton from "./components/EditButton";
 import DeleteButton from "./components/DeleteButton";
 import EpisodesStore from "@/store/episodes-store";
@@ -21,7 +20,7 @@ import { Link2 } from "lucide-react";
 const ConsultationEpisodes = () => {
   const [currentPage, setCurrentPage] = useState(1);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [pageSize, setPageSize] = useState(8);
+  const [pageSize, setPageSize] = useState(10);
   const [searchQuery, setSearchQuery] = useState("");
   const { array, deleteEpisode, editEpisode } = EpisodesStore();
 

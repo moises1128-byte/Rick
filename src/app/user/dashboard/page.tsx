@@ -1,6 +1,6 @@
 "use client";
 
-import CharactersStore from "@/store/character-store";
+// import CharactersStore from "@/store/character-store";
 import EpisodesStore from "@/store/episodes-store";
 import { useCounterStore } from "@/store/providers/counter-store-provider";
 import { useEffect } from "react";
@@ -10,15 +10,15 @@ const Dashboard = () => {
     (state) => state
   );
 
-  const { array, setCharacterArray } = CharactersStore();
+  // const { Array, setCharacterArray } = CharactersStore();
 
-  const { setEpisodesData } = EpisodesStore();
+  const { array, setEpisodesData, Array, setCharacterArray } = EpisodesStore();
 
   const fetchCharacters = async () => {
     try {
-      const response = await fetch("https://rickandmortyapi.com/api/character");
-      const characters = await response.json();
-      setCharacterArray(characters.results);
+      fetch("https://rickandmortyapi.com/api/character")
+        .then((response) => response.json())
+        .then((characters) => setCharacterArray(characters.results));
     } catch (error) {
       alert("Error");
       console.error("Error: ", error);
@@ -41,7 +41,7 @@ const Dashboard = () => {
     fetchEpisodes();
   }, []);
 
-  console.log(array, "test");
+  console.log(Array, "test", array);
 
   return (
     <main className=" flex w-full bg-white	h-full justify-center items-center">

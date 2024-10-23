@@ -1,11 +1,11 @@
 "use client";
 
-import useStore from "@/store/character-store";
+import EpisodesStore from "@/store/episodes-store";
 
 const CharacterCreation = () => {
-  const { array, addItem, updateItem, deleteItem, setMyArray } = useStore();
+  const { Array, addCharacter } = EpisodesStore();
 
-  console.log(array, "test");
+  console.log(Array, "test");
 
   return (
     <main className=" flex w-full bg-white	h-full justify-center items-center">

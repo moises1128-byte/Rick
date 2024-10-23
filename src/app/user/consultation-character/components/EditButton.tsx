@@ -33,19 +33,29 @@ import { useRef, useState } from "react";
 type DataProps = {
   id: number;
   name: string;
-  air_date: string;
-  episode: string;
-  characters: string[];
+  status: string;
+  species: string;
+  type: string;
+  gender: string;
+  origin: { name: string; url: string };
+  location: { name: string; url: string };
+  image: string;
+  episode: string[];
   url: string;
   created: string;
 };
 
-type EpisodeProps = {
+type CharacterProps = {
   id: number;
   name: string;
-  air_date: string;
-  episode: string;
-  characters: string[];
+  status: string;
+  species: string;
+  type: string;
+  gender: string;
+  origin: { name: string; url: string };
+  location: { name: string; url: string };
+  image: string;
+  episode: string[];
   url: string;
   created: string;
 };
@@ -53,36 +63,41 @@ type EpisodeProps = {
 type EditProps = {
   title: string;
   back: string;
-  episodeData: DataProps;
-  editEpisode: (id: number, newItem: EpisodeProps) => void;
+  characterData: DataProps;
+  editCharacter: (id: number, newItem: CharacterProps) => void;
 };
 
-const EditButton = ({ title, back, episodeData, editEpisode }: EditProps) => {
+const EditButton = ({
+  title,
+  back,
+  characterData,
+  editCharacter,
+}: EditProps) => {
   const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   const formSchema = z.object({
     name: z.string().min(1, "Name is required"),
-    created: z.string().min(1, "created is required"),
-    air_date: z.string().min(1, "AirDate is required"),
-    url: z.string().min(1, "url is required"),
+    status: z.string().min(1, "created is required"),
+    species: z.string().min(1, "AirDate is required"),
+    image: z.string().min(1, "url is required"),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: episodeData.name ?? "",
-      created: episodeData.created ?? "",
-      air_date: episodeData.air_date ?? "",
-      url: episodeData.url ?? "",
+      name: characterData.name ?? "",
+      status: characterData.status ?? "",
+      species: characterData.species ?? "",
+      image: characterData.image ?? "",
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    editEpisode(episodeData.id, values);
+    editCharacter(characterData.id, values);
     toast({
-      description: `The episode ${episodeData.name} has been updated ✅`,
+      description: `The Character ${characterData.name} has been updated ✅`,
     });
     setIsOpen(false);
   }
@@ -100,7 +115,7 @@ const EditButton = ({ title, back, episodeData, editEpisode }: EditProps) => {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            {title} - {episodeData.name}
+            {title} - {characterData.name}
           </AlertDialogTitle>
           <AlertDialogDescription>
             <div className="mt-10 flex flex-col gap-y-10 w-full items-center">
@@ -125,12 +140,12 @@ const EditButton = ({ title, back, episodeData, editEpisode }: EditProps) => {
                   />
                   <FormField
                     control={form.control}
-                    name="created"
+                    name="status"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>created</FormLabel>
+                        <FormLabel>status</FormLabel>
                         <FormControl>
-                          <Input placeholder="created" {...field} />
+                          <Input placeholder="status" {...field} />
                         </FormControl>
 
                         <FormMessage />
@@ -139,12 +154,12 @@ const EditButton = ({ title, back, episodeData, editEpisode }: EditProps) => {
                   />
                   <FormField
                     control={form.control}
-                    name="air_date"
+                    name="species"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>AriDate</FormLabel>
+                        <FormLabel>species</FormLabel>
                         <FormControl>
-                          <Input placeholder="air_date" {...field} />
+                          <Input placeholder="species" {...field} />
                         </FormControl>
 
                         <FormMessage />
@@ -153,12 +168,12 @@ const EditButton = ({ title, back, episodeData, editEpisode }: EditProps) => {
                   />
                   <FormField
                     control={form.control}
-                    name="url"
+                    name="image"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Url</FormLabel>
+                        <FormLabel>image</FormLabel>
                         <FormControl>
-                          <Input placeholder="url" {...field} />
+                          <Input placeholder="image" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
